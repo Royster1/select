@@ -75,18 +75,19 @@
                                             <th>学分</th>
                                             <th>上课地点</th>
                                             <th>限选人数</th>
-                                            <th>操作</th>
+                                            <th>删除课程</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="books : ${bookList}">
-                                            <td th:text="${books.getBid()}">1</td>
-                                            <td th:text="${books.getTitle()}">书籍名称</td>
-                                            <td th:text="${books.getDesc()}">书籍简介</td>
-                                            <td th:text="${books.getPrice()}">价格</td>
+                                        <tr th:each="course : ${courseList}">
+                                            <td th:text="${course.getCourse_id()}">1</td>
+                                            <td th:text="${course.getCourse_name()}">课程名称</td>
+                                            <td th:text="${course.getTeacher()}">授课老师</td>
+                                            <td th:text="${course.getPoint()}">学分</td>
+                                            <td th:text="${course.getLocation()}">上课地点</td>
+                                            <td th:text="${course.getLimited()}">限选人数</td>
                                             <td class="relative">
-                                                <!--th:href="@{/api/admin/del-book?id=}+${book.getBid()}"-->
-                                                <a class="action-btn " th:href="@{/api/admin/del-book?id=}+${books.getBid()}"> <!--删除-->
+                                                <a class="action-btn " th:href="@{/api/admin/del-book?id=}+${course.getCourse_id()}"> <!--删除-->
                                                     <svg class="default-size " viewbox="0 0 341.333 341.333 ">
                                                         <g>
                                                             <g>

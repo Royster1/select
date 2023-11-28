@@ -1,7 +1,9 @@
 package com.example.controller.page;
 
+import com.example.mapper.CourseMapper;
 import com.example.service.AuthService;
 import com.example.service.BookService;
+import com.example.service.CourseService;
 import com.example.service.StatService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,13 @@ public class AdminPageController {
     @Resource
     StatService statService;
 
+    @Resource
+    CourseService courseService;
+
     @RequestMapping("/index")
     public String index(HttpSession session, Model model){
         model.addAttribute("user", service.findUser(session));
-        model.addAttribute("borrowList", bookService.getBorrowDetails());
+        model.addAttribute("courseList", courseService.getAllCourse());
         model.addAttribute("stat", statService.getGlobalStat());
         return "/admin/index";
     }
@@ -34,7 +39,7 @@ public class AdminPageController {
     @RequestMapping("/book")
     public String book(HttpSession session, Model model){
         model.addAttribute("user", service.findUser(session));
-        model.addAttribute("bookList", bookService.getAllBook());
+        model.addAttribute("courseList", courseService.getAllCourse());
         return "/admin/book";
     }
 
@@ -44,6 +49,5 @@ public class AdminPageController {
         model.addAttribute("user", service.findUser(session));
         return "/admin/add-book";
     }
-
 
 }

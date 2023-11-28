@@ -212,11 +212,13 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="borrow : ${borrowList}">
-                                                <td th:text="${borrow.getId()}">1</td>
-                                                <td th:text="${borrow.getUser_name()}">1</td>
-                                                <td th:text="${borrow.getBook_title()}">1</td>
-                                                <td th:text="${borrow.getTime()}">1</td>
+                                            <tr th:each="course : ${courseList}">
+                                                <td th:text="${course.getCourse_id()}">1</td>
+                                                <td th:text="${course.getCourse_name()}">课程名称</td>
+                                                <td th:text="${course.getTeacher()}">授课老师</td>
+                                                <td th:text="${course.getPoint()}">学分</td>
+                                                <td th:text="${course.getLocation()}">上课地点</td>
+                                                <td th:text="${course.getLimited()}">限选人数</td>
                                             </tr>
                                             </tbody>
                                         </table>
