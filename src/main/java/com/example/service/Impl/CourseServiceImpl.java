@@ -1,11 +1,13 @@
 package com.example.service.Impl;
 
 import com.example.entiy.Book;
+import com.example.entiy.Borrow;
 import com.example.entiy.Course;
 import com.example.entiy.SelectConnection;
 import com.example.mapper.CourseMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.CourseService;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,44 +39,62 @@ public class CourseServiceImpl implements CourseService {
         mapper.addCourse(course_id, course_name, teacher, point, location, limited);
     }
 
-    // 获取所有课程, 过滤掉已经给预选了
+    // 退订课程
+
     @Override
-    public List<Course> getAllCourseWithOutSelect() {
-        List<Course> books = mapper.allCourse();
-        List<Integer> borrows = mapper.SelectList()
-                .stream()
-                .map(SelectConnection::getCourse_id)
-                .collect(Collectors.toList());
-        return books.stream().filter(book -> !borrows.contains(book.getCourse_id())).collect(Collectors.toList());
+    public int getSelectNum(String course_id) {
+        return mapper.getSelectAccount(course_id);
     }
 
-    // 预选课程
     @Override
-    public List<Course> getAllSelectByoId(int id) {
+    public List<Course> getSelect(int id) {
         // 通过id查询该学生的sid
         Integer sid = userMapper.getSidById(id);
         if (sid == null) return Collections.emptyList(); // 返回空列表
-        return mapper.SelectListBySid(sid) // 拿到学生的借阅信息
+        return mapper.borrowListBySid(sid) // 拿到学生的借阅信息
                 .stream()
                 .map(borrow -> {
-                    return mapper.getSelectById(borrow.getCourse_id());
+                    return mapper.getCourseById(borrow.getCourse_id());
                 })
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void addSelect(int course_id, int id) {
+        Integer sid = userMapper.getSidById(id);
+        if (sid == null) return;
+        mapper.addSelect(course_id, id);
+    }
 
+    @Override
+    public List<Course> getAllCourseWithOutSelect() {
+        List<Course> courses = mapper.allCourse();
+        List<Integer> selectConnections = mapper.SelectList()
+                .stream()
+                .map(SelectConnection::getCourse_id)
+                .collect(Collectors.toList());
+        return courses
+                .stream()
+                .filter(course -> !selectConnections.contains(Integer.parseInt(course.getCourse_id())))
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<Course> getAllSelectByUid(int id) {
+        Integer sid = userMapper.getSidById(id);
+        if (sid == null) return Collections.emptyList();
+        return mapper.selectListByUid(sid)
+                .stream()
+                .map(selectConnection -> {
+                    return mapper.getCourseById(selectConnection.getCourse_id());
+                })
+                .collect(Collectors.toList());
+    }
 
-    // 退订课程
     @Override
     public void returnSelect(int course_id, int id) {
         Integer sid = userMapper.getSidById(id);
         if (sid == null) return;
         mapper.deleteSelect(course_id, sid);
-    }
-
-    @Override
-    public int getSelectNum(String course_id) {
-        return mapper.getSelectAccount(course_id);
     }
 }

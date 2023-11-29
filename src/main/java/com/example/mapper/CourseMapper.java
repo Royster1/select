@@ -6,7 +6,9 @@ import com.example.entiy.Borrow;
 import com.example.entiy.Course;
 import com.example.entiy.SelectConnection;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Mapper
@@ -31,11 +33,11 @@ public interface CourseMapper {
 
 
     // 预选课程
-    @Insert("insert into borrow(course_id, uid) values(#{course_id}, #{uid},")
+    @Insert("insert into elective(course_id, uid) values(#{course_id}, #{uid})")
     void addSelect(@Param("course_id") int course_id, @Param("uid") int uid);
 
     // 退订课程
-    @Delete("delete from borrow where course_id = #{course_id} and uid = #{uid}")
+    @Delete("delete from elective where course_id = #{course_id} and uid = #{uid}")
     void deleteSelect(@Param("course_id") int course_id, @Param("uid") int uid);
 
     // 获取该课程已选人数
@@ -44,11 +46,15 @@ public interface CourseMapper {
             "GROUP BY course_id;")
     int getSelectAccount(String course_id);
 
-    // 这个学生选择了什么课程
     @Select("select * from elective where uid = #{uid}")
-    List<Course> SelectListBySid(int uid);
+    List<SelectConnection> borrowListBySid(Integer sid);
 
-    // 通过课程id插叙课程信息
+    @Select("select * from elective")
+    List<Course> selectList();
+
+    @Select("select * from elective where uid = #{uid}")
+    List<SelectConnection> selectListByUid(int uid);
+
     @Select("select * from course where course_id = #{course_id}")
-    Course getSelectById(String course_id);
+    Course getCourseById(int course_id);
 }

@@ -7,7 +7,6 @@ import com.example.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -36,9 +35,7 @@ public class UserPageController {
     public String book(HttpSession session, Model model){
         AuthUser user = service.findUser(session);
         model.addAttribute("user", user);
-        model.addAttribute("bookList", courseService.getAllSelectByoId(user.getId()));
-        model.addAttribute("test", courseService.getSelectNum("2"));
+        model.addAttribute("bookList", courseService.getAllSelectByUid(user.getId()));
         return "/user/book";
     }
-
 }

@@ -10,5 +10,4 @@ public class Course {
     int point;
     String location;
     int limited;
-    int SelectNum;
 }

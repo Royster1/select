@@ -78,8 +78,8 @@
                                             <td th:text="${books.getPoint()}">学分</td>
                                             <td th:text="${books.getLocation()}">上课地点</td>
                                             <td class="relative">
-                                                <!--th:href="@{/api/user/borrow-book?id=}+${books.getBid()}"-->
-                                                <a class="action-btn" href="#"> <!--借阅书籍-->
+
+                                                <a class="action-btn"  th:href="@{/api/user/borrow-book?id=}+${books.getCourse_id()}"> <!--借阅书籍-->
                                                     <svg class="default-size " viewbox="0 0 341.333 341.333 ">
                                                         <g>
                                                             <g>

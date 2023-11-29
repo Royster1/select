@@ -24,6 +24,4 @@ public interface BookService {
     // 归还图书
     void returnBook(int bid, int id);
 
-    // 图书管理系统 图书借阅信息一览
-    List<BorrowDetails> getBorrowDetails();
 }

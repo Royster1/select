@@ -80,8 +80,4 @@ public class BookServiceImpl implements BookService {
         mapper.deleteBorrow(bid, sid);
     }
 
-    @Override
-    public List<BorrowDetails> getBorrowDetails() {
-        return mapper.borrowDetails();
-    }
 }

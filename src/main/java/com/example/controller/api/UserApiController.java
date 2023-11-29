@@ -2,6 +2,7 @@ package com.example.controller.api;
 
 import com.example.entiy.AuthUser;
 import com.example.service.BookService;
+import com.example.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +18,13 @@ public class UserApiController {
     @Resource
     BookService service;
 
+    @Resource
+    CourseService courseService;
+
     @RequestMapping(value = "/borrow-book", method = RequestMethod.GET)
-    public String borrowBook(@RequestParam("id") int bid,
+    public String borrowBook(@RequestParam("id") int course_id,
                              @SessionAttribute("user") AuthUser user){ // sid 从session中取
-        service.borrowBook(bid, user.getId());
+        courseService.addSelect(course_id, user.getId());
         return "redirect:/page/user/book";
     }
 
