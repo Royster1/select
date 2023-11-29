@@ -1,7 +1,10 @@
 package com.example.mapper;
 
 
+import com.example.entiy.Book;
+import com.example.entiy.Borrow;
 import com.example.entiy.Course;
+import com.example.entiy.SelectConnection;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -21,4 +24,31 @@ public interface CourseMapper {
     void addCourse(@Param("course_id") String course_id, @Param("course_name") String course_name,
                    @Param("teacher")String teacher, @Param("point") int point,
                    @Param("location") String location, @Param("limited") int limited);
+
+    // 获取所有已选课程, 用户借阅后, 就把选课系统对应的课程屏蔽掉
+    @Select("select * from elective")
+    List<SelectConnection> SelectList(); // 用户借阅列表中没用这本书才能给用户借
+
+
+    // 预选课程
+    @Insert("insert into borrow(course_id, uid) values(#{course_id}, #{uid},")
+    void addSelect(@Param("course_id") int course_id, @Param("uid") int uid);
+
+    // 退订课程
+    @Delete("delete from borrow where course_id = #{course_id} and uid = #{uid}")
+    void deleteSelect(@Param("course_id") int course_id, @Param("uid") int uid);
+
+    // 获取该课程已选人数
+    @Select("SELECT COUNT(*) AS selected_count\n" +
+            "FROM elective WHERE course_id = #{course_id}\n" +
+            "GROUP BY course_id;")
+    int getSelectAccount(String course_id);
+
+    // 这个学生选择了什么课程
+    @Select("select * from elective where uid = #{uid}")
+    List<Course> SelectListBySid(int uid);
+
+    // 通过课程id插叙课程信息
+    @Select("select * from course where course_id = #{course_id}")
+    Course getSelectById(String course_id);
 }

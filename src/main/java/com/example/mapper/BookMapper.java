@@ -4,6 +4,7 @@ package com.example.mapper;
 import com.example.entiy.Book;
 import com.example.entiy.Borrow;
 import com.example.entiy.BorrowDetails;
+import com.example.entiy.Course;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public interface BookMapper {
     @Select("select * from borrow where sid = #{sid}")
     List<Borrow> borrowListBySid(int sid);
 
-    // 规划图书
+    // 规还图书
     @Delete("delete from borrow where bid = #{bid} and sid = #{sid}")
     void deleteBorrow(@Param("bid") int bid, @Param("sid") int sid);
 
@@ -59,4 +60,9 @@ public interface BookMapper {
     int getBookCount();
     @Select("select count(*) from borrow")
     int getBorrowCount();
+
+
+    // 通过课程id查看课程信息
+    @Select("select * from course where course_id = #{course_id}")
+    Course getCourseById(String course_id);
 }

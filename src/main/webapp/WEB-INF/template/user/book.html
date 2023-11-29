@@ -72,13 +72,14 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="books : ${bookList}">
-                                            <td th:text="${books.getBid()}">1</td>
-                                            <td th:text="${books.getTitle()}">书籍名称</td>
-                                            <td th:text="${books.getDesc()}">书籍简介</td>
-                                            <td th:text="${books.getPrice()}">价格</td>
+                                            <td th:text="${books.getCourse_id()}">课程编号</td>
+                                            <td th:text="${books.getCourse_name()}">课程名称</td>
+                                            <td th:text="${books.getTeacher()}">授课老师</td>
+                                            <td th:text="${books.getPoint()}">学分</td>
+                                            <td th:text="${books.getLocation()}">上课地点</td>
                                             <td class="relative">
-                                                <!--th:href="@{/api/admin/del-book?id=}+${book.getBid()}"-->
-                                                <a class="action-btn " th:href="@{/api/user/return-book?id=}+${books.getBid()}"> <!--借阅书籍-->
+<!--                                                th:href="@{/api/user/return-book?id=}+${books.getBid()}"-->
+                                                <a class="action-btn " href="#"> <!--借阅书籍-->
                                                     <svg class="default-size " viewbox="0 0 341.333 341.333 ">
                                                         <g>
                                                             <g>
@@ -92,8 +93,9 @@
                                                     </svg>
                                                 </a>
                                             </td>
+                                            <td th:text="${books.getLimited()}">限选人数</td>
+                                            <td th:text="${test}">已选人数</td>
                                         </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
