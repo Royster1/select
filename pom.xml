@@ -120,6 +120,8 @@
             <version>1.5.2</version>
         </dependency>
 <!--        redis-->
+
+
     </dependencies>
 
     <build>
