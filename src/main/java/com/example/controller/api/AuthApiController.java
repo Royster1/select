@@ -23,7 +23,7 @@ public class AuthApiController {
 
     @RequestMapping("/verify-code")
     public void verifyCode(@RequestParam("email") String email) throws MessagingException {
-            verifyService.sendVerifyCode(email);
+        verifyService.sendVerifyCode(email);
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String Register(@RequestParam("username") String name,
