@@ -52,8 +52,11 @@ public interface CourseMapper {
     @Select("select * from elective")
     List<Course> selectList();
 
-    @Select("select * from elective where uid = #{uid}")
-    List<SelectConnection> selectListByUid(int uid);
+    @Select("SELECT c.*\n" +
+            "FROM course c\n" +
+            "INNER JOIN elective e ON c.course_id = e.course_id\n" +
+            "WHERE e.uid = #{uid};")
+    List<Course> selectListByUid(int uid);
 
     @Select("select * from course where course_id = #{course_id}")
     Course getCourseById(int course_id);

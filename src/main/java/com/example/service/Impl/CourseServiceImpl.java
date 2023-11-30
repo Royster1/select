@@ -74,14 +74,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllSelectByUid(int id) {
-        Integer sid = userMapper.getSidById(id);
-        if (sid == null) return Collections.emptyList();
-        return mapper.selectListByUid(sid)
-                .stream()
-                .map(selectConnection -> {
-                    return mapper.getCourseById(selectConnection.getCourse_id());
-                })
-                .collect(Collectors.toList());
+        return mapper.selectListByUid(id);
     }
 
     @Override
