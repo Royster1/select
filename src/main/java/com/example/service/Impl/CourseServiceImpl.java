@@ -67,17 +67,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourseWithOutSelect() {
-        List<Course> courses = mapper.allCourse();
-        List<Integer> selectConnections = mapper.SelectList()
-                .stream()
-                .map(SelectConnection::getCourse_id)
-                .collect(Collectors.toList());
-        return courses
-                .stream()
-                .filter(course -> !selectConnections.contains(Integer.parseInt(course.getCourse_id())))
-                .collect(Collectors.toList());
+    public List<Course> getAllCourseWithOutSelect(int uid) {
+        return mapper.getUserSelect(uid);
     }
+
 
     @Override
     public List<Course> getAllSelectByUid(int id) {

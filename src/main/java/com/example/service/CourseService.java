@@ -25,7 +25,7 @@ public interface CourseService {
     // 添加预选
     void addSelect(int course_id, int id);
     // 查看可预选
-    List<Course> getAllCourseWithOutSelect();
+    List<Course> getAllCourseWithOutSelect(int uid);
     List<Course> getAllSelectByUid(int id);
 
     void returnSelect(int course_id, int id);

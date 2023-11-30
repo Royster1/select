@@ -57,4 +57,10 @@ public interface CourseMapper {
 
     @Select("select * from course where course_id = #{course_id}")
     Course getCourseById(int course_id);
+
+    @Select("SELECT c.*\n" +
+            "FROM course c\n" +
+            "LEFT JOIN elective e ON c.course_id = e.course_id AND e.uid = #{uid}\n" +
+            "WHERE e.course_id IS NULL;")
+    List<Course> getUserSelect(int uid);
 }

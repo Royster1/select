@@ -26,8 +26,9 @@ public class UserPageController {
 
     @RequestMapping("/index")
     public String index(HttpSession session, Model model){
+        AuthUser user = service.findUser(session);
         model.addAttribute("user", service.findUser(session));
-        model.addAttribute("bookList", courseService.getAllCourseWithOutSelect());
+        model.addAttribute("bookList", courseService.getAllCourseWithOutSelect(user.getId()));
         return "/user/index";
     }
 

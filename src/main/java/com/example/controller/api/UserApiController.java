@@ -30,9 +30,9 @@ public class UserApiController {
 
     // 归还图书 将 借阅信息删除
     @RequestMapping(value = "/return-book", method = RequestMethod.GET)
-    public String returnBook(@RequestParam("id") int bid,
+    public String returnBook(@RequestParam("id") int course_id,
                              @SessionAttribute("user")AuthUser user){
-        service.returnBook(bid, user.getId());
+        courseService.returnSelect(course_id, user.getId());
         return "redirect:/page/user/book";
     }
 }
