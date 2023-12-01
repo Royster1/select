@@ -2,6 +2,7 @@ package com.example.service;
 
 
 import com.example.entiy.Course;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -29,5 +30,12 @@ public interface CourseService {
     List<Course> getAllSelectByUid(int id);
 
     void returnSelect(int course_id, int id);
+
+    // 选课人数+1
+    void updateIsSelect(int course_id);
+
+    // 选课人数-1
+    void updateIsSelect_2(int course_id);
+
 
 }

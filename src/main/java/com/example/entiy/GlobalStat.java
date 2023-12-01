@@ -10,4 +10,6 @@ public class GlobalStat {
     int userCount;
     int bookCount;
     int borrowCount;
+    int courseCount;
+    int electiveCount;
 }

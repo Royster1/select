@@ -2,6 +2,7 @@ package com.example.service.Impl;
 
 import com.example.service.VerifyService;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.mail.*;
@@ -12,7 +13,8 @@ import java.util.Random;
 
 @Service
 public class VerifyServiceImpl implements VerifyService {
-
+    //连接本地的 Redis 服务
+    Jedis jedis = new Jedis("localhost", 6379);
 
     @Override
     public void sendVerifyCode(String mail) throws MessagingException {
@@ -51,6 +53,9 @@ public class VerifyServiceImpl implements VerifyService {
         Random random = new Random();
         int code = random.nextInt(899999) + 100000;
 
+        // redis
+        jedis.set("verify:code:" + mail, code + "");
+
         mimeMessage.setContent("您的验证码为:"+ code + ", 三分钟内有效, 请及时完成注册! 如果不是本人操作, 请忽略!","text/html;charset=utf-8");
         //3.6 发送邮件
         transport.sendMessage(mimeMessage,mimeMessage.getAllRecipients());
@@ -59,4 +64,14 @@ public class VerifyServiceImpl implements VerifyService {
         transport.close();
     }
 
+
+    public boolean doVerify(String email, String code) {
+        String string = jedis.get("verify:code:" + email);
+        // redis 中 key是 verify:code:royster61@163.com, value是验证码
+        jedis.del("verify:code:" + email); // 验证码只能获取一次
+        if (string == null) return false; // 邮箱对应不上
+        if (!string.equals(code))   return false; // 验证码对应不上
+        jedis.del("verify:code:" + email); // 验证码成功只能用一次
+        return true; // redis中的code与表单传入过来的code进行对比
+    }
 }

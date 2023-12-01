@@ -25,6 +25,7 @@ public class UserApiController {
     public String borrowBook(@RequestParam("id") int course_id,
                              @SessionAttribute("user") AuthUser user){ // sid 从session中取
         courseService.addSelect(course_id, user.getId());
+        courseService.updateIsSelect(course_id);
         return "redirect:/page/user/book";
     }
 
@@ -33,6 +34,7 @@ public class UserApiController {
     public String returnBook(@RequestParam("id") int course_id,
                              @SessionAttribute("user")AuthUser user){
         courseService.returnSelect(course_id, user.getId());
+        courseService.updateIsSelect_2(course_id);
         return "redirect:/page/user/book";
     }
 }

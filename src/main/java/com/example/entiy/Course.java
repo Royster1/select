@@ -10,4 +10,5 @@ public class Course {
     int point;
     String location;
     int limited;
+    int is_select;
 }

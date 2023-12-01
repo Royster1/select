@@ -49,8 +49,7 @@ public interface CourseMapper {
     @Select("select * from elective where uid = #{uid}")
     List<SelectConnection> borrowListBySid(Integer sid);
 
-    @Select("select * from elective")
-    List<Course> selectList();
+
 
     @Select("SELECT c.*\n" +
             "FROM course c\n" +
@@ -66,4 +65,21 @@ public interface CourseMapper {
             "LEFT JOIN elective e ON c.course_id = e.course_id AND e.uid = #{uid}\n" +
             "WHERE e.course_id IS NULL;")
     List<Course> getUserSelect(int uid);
+
+
+    // 选课人数+1
+    @Update("update course set is_select = is_select + 1 where course_id = #{course_id}")
+    void updateIsSelect(int course_id);
+
+    // 选课人数+1
+    @Update("update course set is_select = is_select - 1 where course_id = #{course_id}")
+    void updateIsSelect_2(int course_id);
+
+    // 课程数量
+    @Select("select count(*) from course")
+    int getCourseCount();
+
+    // 选课总数
+    @Select("select count(*) from elective")
+    int getElectiveCount();
 }

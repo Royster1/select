@@ -83,4 +83,14 @@ public class CourseServiceImpl implements CourseService {
         if (sid == null) return;
         mapper.deleteSelect(course_id, sid);
     }
+
+    @Override
+    public void updateIsSelect(int course_id) {
+        mapper.updateIsSelect(course_id);
+    }
+
+    @Override
+    public void updateIsSelect_2(int course_id) {
+        mapper.updateIsSelect_2(course_id);
+    }
 }

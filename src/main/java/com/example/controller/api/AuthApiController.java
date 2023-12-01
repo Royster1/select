@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,11 +29,17 @@ public class AuthApiController {
         verifyService.sendVerifyCode(email);
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String Register(@RequestParam("username") String name,
-                           @RequestParam("sex") String sex,
-                           @RequestParam("grade") String grade,
-                           @RequestParam("password") String password) {
-        service.register(name, sex, grade, password);
-        return "redirect:/login";
+    public void Register(@RequestParam("username") String name,
+                         @RequestParam("sex") String sex,
+                         @RequestParam("grade") String grade,
+                         @RequestParam("password") String password,
+                         @RequestParam("email") String email,
+                         @RequestParam("verify") String verify, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        if (verifyService.doVerify(email, verify)) {
+            service.register(name, sex, grade, password);
+            response.sendRedirect("/bookmanager/page/auth/login");
+        } else {
+            response.sendRedirect("/bookmanager/page/auth/register");
+        }
     }
 }
