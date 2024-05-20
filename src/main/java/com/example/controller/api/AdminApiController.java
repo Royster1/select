@@ -1,7 +1,5 @@
 package com.example.controller.api;
 
-import com.example.mapper.CourseMapper;
-import com.example.service.BookService;
 import com.example.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +11,6 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/api/admin")
 public class AdminApiController {
-
-    @Resource
-    BookService bookService;
-
     @Resource
     CourseService courseService;
 

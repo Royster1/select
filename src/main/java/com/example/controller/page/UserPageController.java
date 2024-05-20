@@ -2,7 +2,6 @@ package com.example.controller.page;
 
 import com.example.entiy.AuthUser;
 import com.example.service.AuthService;
-import com.example.service.BookService;
 import com.example.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +16,6 @@ public class UserPageController {
 
     @Resource
     AuthService service;
-
-    @Resource
-    BookService bookService;
 
     @Resource
     CourseService courseService;

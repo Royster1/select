@@ -1,9 +1,7 @@
 package com.example.controller.api;
 
-import com.example.entiy.RestBean;
 import com.example.service.AuthService;
 import com.example.service.VerifyService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +26,7 @@ public class AuthApiController {
     public void verifyCode(@RequestParam("email") String email) throws MessagingException {
         verifyService.sendVerifyCode(email);
     }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void Register(@RequestParam("username") String name,
                          @RequestParam("sex") String sex,
@@ -42,4 +41,6 @@ public class AuthApiController {
             response.sendRedirect("/bookmanager/page/auth/register");
         }
     }
+
+
 }

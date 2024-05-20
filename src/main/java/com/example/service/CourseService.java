@@ -17,8 +17,6 @@ public interface CourseService {
                     String teacher, int point,
                     String location, int limited);
 
-    // 获取每个课程已选人数
-    int getSelectNum(String course_id);
 
     // 预选课程
     List<Course> getSelect(int id);

@@ -1,13 +1,9 @@
 package com.example.service.Impl;
 
-import com.example.entiy.Book;
-import com.example.entiy.Borrow;
 import com.example.entiy.Course;
-import com.example.entiy.SelectConnection;
 import com.example.mapper.CourseMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.CourseService;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,10 +37,6 @@ public class CourseServiceImpl implements CourseService {
 
     // 退订课程
 
-    @Override
-    public int getSelectNum(String course_id) {
-        return mapper.getSelectAccount(course_id);
-    }
 
     @Override
     public List<Course> getSelect(int id) {

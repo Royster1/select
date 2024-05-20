@@ -8,7 +8,7 @@
 <!-- Begin Head -->
 
 <head>
-    <title>注册 - 图书管理系统</title>
+    <title>注册 - 选课管理系统</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="description" content="">
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="col-5">
                                         <a>
-                                            <a href="javascript:askVerifyCode()" class="ad-btn ad-login-member">获取验证码</a>
+                                            <a href="javascript:askVerifyCode()"  id="verifyCode" class="ad-btn ad-login-member">获取验证码</a>
                                         </a>
                                     </div>
                                 </div>
@@ -103,6 +103,27 @@
         </div>
     </div>
 
+    <script>
+
+        // 获取验证码60s不能点击
+        let verifyCode = document.querySelector('#verifyCode')
+
+        verifyCode.addEventListener('click', function () {
+            verifyCode.style="pointer-events:none;"
+            let i = 60
+            let djs = setInterval(function () {
+                i--
+                verifyCode.innerHTML = `${i}秒再获取`
+                if (i === 0) {
+                    clearInterval(djs)
+                    verifyCode.style="pointer-events:auto;"
+                    verifyCode.getAttribute("style")
+                    verifyCode.innerHTML = `获取验证码`
+                }
+            },1000)
+        })
+
+    </script>
 </body>
 
 </html>

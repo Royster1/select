@@ -1,14 +1,11 @@
 package com.example.mapper;
 
 
-import com.example.entiy.Book;
-import com.example.entiy.Borrow;
 import com.example.entiy.Course;
 import com.example.entiy.SelectConnection;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Mapper
@@ -17,12 +14,12 @@ public interface CourseMapper {
     @Select("select * from course")
     List<Course> allCourse();
 
-    // 删除书籍
+    // 删除课程
     @Delete("delete from course where course_id = #{bid}")
     void deleteCourse(int bid);
 
-    @Insert("insert into course(course_id, course_name, teacher, point, location, limited)" +
-            "values(#{course_id}, #{course_name}, #{teacher}, #{point}, #{location}, #{limited})")
+    @Insert("insert into course(course_id, course_name, teacher, point, location, limited, is_select)" +
+            "values(#{course_id}, #{course_name}, #{teacher}, #{point}, #{location}, #{limited}, 0)")
     void addCourse(@Param("course_id") String course_id, @Param("course_name") String course_name,
                    @Param("teacher")String teacher, @Param("point") int point,
                    @Param("location") String location, @Param("limited") int limited);
@@ -41,15 +38,15 @@ public interface CourseMapper {
     void deleteSelect(@Param("course_id") int course_id, @Param("uid") int uid);
 
     // 获取该课程已选人数
-    @Select("SELECT COUNT(*) AS selected_count\n" +
-            "FROM elective WHERE course_id = #{course_id}\n" +
-            "GROUP BY course_id;")
-    int getSelectAccount(String course_id);
+    @Select("select is_select from course where course_id = #{course_id}")
+    int getSelectAccount(int course_id);
+
+    // 获取该课程限选人数
+    @Select("select limited from course where course_id = #{course_id}")
+    int getLimited(int course_id);
 
     @Select("select * from elective where uid = #{uid}")
     List<SelectConnection> borrowListBySid(Integer sid);
-
-
 
     @Select("SELECT c.*\n" +
             "FROM course c\n" +

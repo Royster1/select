@@ -78,8 +78,8 @@
                                             <td th:text="${books.getPoint()}">学分</td>
                                             <td th:text="${books.getLocation()}">上课地点</td>
                                             <td class="relative">
-
-                                                <a class="action-btn"  th:href="@{/api/user/borrow-book?id=}+${books.getCourse_id()}"> <!--借阅书籍-->
+                                                <a class="action-btn"  th:if="${books.getIs_select() lt books.getLimited()}"
+                                                   th:href="@{/api/user/borrow-book?id=}+${books.getCourse_id()}"> <!--借阅书籍-->
                                                     <svg class="default-size " viewbox="0 0 341.333 341.333 ">
                                                         <g>
                                                             <g>
@@ -92,6 +92,9 @@
                                                         </g>
                                                     </svg>
                                                 </a>
+                                                <p th:if="${books.getIs_select() ge books.getLimited() }">
+                                                    人数已满
+                                                </p>
                                             </td>
                                             <td th:text="${books.getLimited()}">限选人数</td>
                                             <td th:text="${books.getIs_select()}">已选人数</td>

@@ -1,8 +1,6 @@
 package com.example.controller.page;
 
-import com.example.mapper.CourseMapper;
 import com.example.service.AuthService;
-import com.example.service.BookService;
 import com.example.service.CourseService;
 import com.example.service.StatService;
 import org.springframework.stereotype.Controller;
@@ -18,9 +16,6 @@ public class AdminPageController {
 
     @Resource
     AuthService service;
-
-    @Resource
-    BookService bookService;
 
     @Resource
     StatService statService;
